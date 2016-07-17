@@ -36,25 +36,6 @@ var app = angular.module("skeep",["ngRoute"]);
 			var dataserviceobject = {};
 			dataserviceobject.save = function(input)
 			{
-				var entry = eval("["+input+"]");
-				
-				entry.index = dataserviceobject.getNewId();
-			
-				var tax = dataserviceobject.calculateTax(entry);
-				
-				dataserviceobject.setrefundvsowed(tax,entry);
-				
-				$http.post("/taxcalc/o/storeLiteral",entry)
-				.then(
-					function(data){
-						//dataserviceobject.counter = data.data.id;
-						console.log(data.data);
-					},
-					function(data,status){
-						alert("Error occured "+status);
-					}
-				);
-
 			}		
 			dataserviceobject.counter = 3;
 			
@@ -76,7 +57,6 @@ var app = angular.module("skeep",["ngRoute"]);
 			dataserviceobject.calculateTax = function(entry)
 			{
 				var formula = entry.taxFormula;
-				console.log(formula);
 				var tax = eval(dataserviceobject.transform(formula,"entry"));
 					//.1*(entry.wages+entry.interest);
 				return tax;
@@ -118,13 +98,11 @@ var app = angular.module("skeep",["ngRoute"]);
 				$http.get("/taxcalc/o/form")
 				.then(function(response) {
 					$scope.newItem = response.data;
-					console.log($scope.newItem);
 				});
 				$scope.calculate = function()
 				{
 					dataservice.calc($scope.newItem);
 				}
-				console.log(angular.element(document.body).injector().get('dataservice'));
 			}
 		]
 	);
