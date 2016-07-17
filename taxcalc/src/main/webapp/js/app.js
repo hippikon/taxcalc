@@ -67,7 +67,7 @@ var app = angular.module("skeep",["ngRoute"]);
 				dataserviceobject.items.push(entry);
 
 
-				$http.post("/springrest/o/store",entry)
+				$http.post("/taxcalc/o/store",entry)
 				.then(
 					function(data){
 						dataserviceobject.counter = data.id;
