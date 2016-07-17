@@ -1,8 +1,8 @@
 package digital.places.woot;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import digital.places.root.AppContextJavaProvider;
+import digital.places.root.TaxTemplate;
 
 @Controller
 public class RestMemberController {
@@ -26,79 +29,13 @@ public class RestMemberController {
 	    return new ResponseEntity<TaxTemplate>(taxTemplate, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/members", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Members getRestMembers()
+	@RequestMapping(value = "/form", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody TaxTemplate getRestMembers()
 	{
-		Members members = new Members();
-		members.setMembers(findAll(10));
-		return members;
-	}
-
-	@RequestMapping(value = "/members100", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Members getRestMembers100()
-	{
-		Members members = new Members();
-		members.setMembers(findAll(100));
-		return members;
-		
-	}
-
-	@RequestMapping(value = "/members10000", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Members getRestMembers10000()
-	{
-		Members members = new Members();
-		members.setMembers(findAll(10000));
-		return members;
-		
-	}
-	
-	@RequestMapping(value = "/membersxml", method = RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE)
-	public @ResponseBody Members getRestMembersxml()
-	{
-		Members members = new Members();
-		members.setMembers(findAll(10));
-		return members;
-		
-	}
-
-	@RequestMapping(value = "/membersxml100", method = RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE)
-	public @ResponseBody Members getRestMembersxml100()
-	{
-		Members members = new Members();
-		members.setMembers(findAll(100));
-		return members;
-		
-	}
-
-	@RequestMapping(value = "/membersxml10000", method = RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE)
-	public @ResponseBody Members getRestMembersxml10000()
-	{
-		Members members = new Members();
-		members.setMembers(findAll(10000));
-		return members;
-		
-	}
-
-	@RequestMapping(value = "/membersatom", method = RequestMethod.GET, produces = MediaType.APPLICATION_ATOM_XML_VALUE)
-	public @ResponseBody Members getRestMembersatom()
-	{
-		Members members = new Members();
-		members.setMembers(findAll(10));
-		return members;
-		
-	}
-
-	private List<Member> findAll(int range)
-	{
-		List<Member> membersList = new ArrayList<Member>();
-		for (int i=0;i<range;i++)
-		{
-			Member member = new Member();
-			member.setName("Madhuri"+i);
-			member.setPhone("123"+i);
-			membersList.add(member);
-		}
-		return membersList;
+		MongoOperations mongoOperation = (MongoOperations)AppContextJavaProvider.getApplicationContext().getBean("mongoTemplate");	
+		Query searchUserQuery = new Query(Criteria.where("index").is(-1));
+		TaxTemplate taxTemplate = mongoOperation.findOne(searchUserQuery, TaxTemplate.class);
+		return taxTemplate;
 	}
 
 }

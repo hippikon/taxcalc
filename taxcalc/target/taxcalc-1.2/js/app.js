@@ -67,10 +67,10 @@ var app = angular.module("skeep",["ngRoute"]);
 				dataserviceobject.items.push(entry);
 
 
-				$http.post("/springrest/o/store",entry)
+				$http.post("/taxcalc/o/store",entry)
 				.then(
 					function(data){
-						dataserviceobject.counter = data.id;
+						dataserviceobject.counter = data.data.id;
 						console.log(data.data.id);
 					},
 					function(data,status){
@@ -124,11 +124,16 @@ var app = angular.module("skeep",["ngRoute"]);
 	
 	app.controller
 	("skeepC2",
-		["$scope","$location","dataservice",function($scope,$location,dataservice)
+		["$scope","$location","dataservice","$http",function($scope,$location,dataservice,$http)
 			{
 				$scope.items = dataservice.items;
 				$scope.fitems = dataservice.fields;
 				$scope.newItem = {id:3,firstName:"Abc", lastName:"123", wages:1000.00,interest:100.00,paid:300.00,refund:0.00,owed:0.00};
+				$http.get("/taxcalc/o/form")
+				.then(function(response) {
+					$scope.newItem = response.data;
+					console.log($scope.newItem);
+				});
 				$scope.calculate = function()
 				{
 					dataservice.save($scope.newItem);

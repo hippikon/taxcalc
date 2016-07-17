@@ -1,7 +1,4 @@
-digital\places\woot\TaxTemplate.class
 digital\places\root\FileOps.class
 digital\places\woot\RestMemberController.class
-digital\places\root\AppMailer.class
-digital\places\woot\Members.class
-digital\places\woot\Member.class
+digital\places\root\TaxTemplate.class
 digital\places\root\AppContextJavaProvider.class

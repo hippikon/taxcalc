@@ -3,23 +3,23 @@
 		<form name="groceryform">
 			<div>
 				First Name : 
-				<input type="text" placeholder="First Name" ng-model="newItem.firstName"/>
+				<input type="text" placeholder="First Name" ng-model="newItem.firstName" required/>
 			</div>
 			<div>
 				Last Name : 
-				<input type="text" placeholder="Last Name" ng-model="newItem.lastName"/>
+				<input type="text" placeholder="Last Name" ng-model="newItem.lastName" required/>
 			</div>
 			<div>
 				Wages : 
-				<input type="number" placeholder="Wages" ng-model="newItem.wages"/>
+				<input type="number" placeholder="Wages" ng-model="newItem.wages" required/>
 			</div>
 			<div>
 				Taxable Interest : 
-				<input type="number" placeholder="Taxable Interest" ng-model="newItem.interest"/>
+				<input type="number" placeholder="Taxable Interest" ng-model="newItem.interest" required/>
 			</div>
 			<div>
 				Tax Paid : 
-				<input type="number" placeholder="Tax Paid" ng-model="newItem.paid"/>
+				<input type="number" placeholder="Tax Paid" ng-model="newItem.paid" required/>
 			</div>
 			<div>
 				<button ng-click="calculate()">Calculate</button>
@@ -29,7 +29,8 @@
 			</div>
 		</form>
 		<div>
-			Your tax refund is {{newItem.refund}}. You owe {{newItem.owed}}
+			Your tax refund is {{newItem.refund}}. You owe {{newItem.owed}}<br/>
+			Formula used - {{newItem.taxFormula}}
 		</div>
 	</div>
 </div>
