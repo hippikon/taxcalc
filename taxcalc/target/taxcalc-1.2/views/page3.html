@@ -1,0 +1,10 @@
+<div>
+	<div>
+		<ul style="color:#000000">
+			<li ng-repeat="item in fitems track by $index">
+				<input type="text" ng-model="item.value" required/>
+			</li>
+		</ul>
+		<button type="button" ng-click="addField()">Add Field</button>
+	</div>
+</div>

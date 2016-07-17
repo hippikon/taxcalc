@@ -1,0 +1,35 @@
+<div>
+	<div>
+		<form name="groceryform">
+			<div>
+				First Name : 
+				<input type="text" placeholder="First Name" ng-model="newItem.firstName"/>
+			</div>
+			<div>
+				Last Name : 
+				<input type="text" placeholder="Last Name" ng-model="newItem.lastName"/>
+			</div>
+			<div>
+				Wages : 
+				<input type="number" placeholder="Wages" ng-model="newItem.wages"/>
+			</div>
+			<div>
+				Taxable Interest : 
+				<input type="number" placeholder="Taxable Interest" ng-model="newItem.interest"/>
+			</div>
+			<div>
+				Tax Paid : 
+				<input type="number" placeholder="Tax Paid" ng-model="newItem.paid"/>
+			</div>
+			<div>
+				<button ng-click="calculate()">Calculate</button>
+			</div>
+			<div>
+				<a href="#/">Cancel</a>
+			</div>
+		</form>
+		<div>
+			Your tax refund is {{newItem.refund}}. You owe {{newItem.owed}}
+		</div>
+	</div>
+</div>
