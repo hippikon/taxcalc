@@ -15,7 +15,7 @@
 	<nav>
 		<div>
 			<div>
-				<span><a href="#/">Home</a>|<a href="#/modify">Modify Form</a>|<a href="#/addRule">Add Tax Rule</a></span>
+				<span><a href="#/">Home</a>|<a href="#/modify">Modify Form</a></span>
 				<br/>
 				<h1>{{appTitle}}</h1>
 				<br/>
