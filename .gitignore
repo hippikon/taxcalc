@@ -1,0 +1,9 @@
+taxcalc/target/*
+taxcalc/pom.xml.tag
+taxcalc/pom.xml.releaseBackup
+taxcalc/pom.xml.versionsBackup
+taxcalc/pom.xml.next
+taxcalc/release.properties
+taxcalc/dependency-reduced-pom.xml
+taxcalc/buildNumber.properties
+taxcalc/.mvn/timing.properties
