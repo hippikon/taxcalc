@@ -34,44 +34,21 @@ var app = angular.module("skeep",["ngRoute"]);
 	("dataservice",function($http)
 		{
 			var dataserviceobject = {};
-			dataserviceobject.items = 
-				[
-					{id:1,firstName:"Madhuri", lastName:"Ramachandran", wages:1000.00,interest:100.00,paid:300.00,refund:0.00,owed:0.00},
-					{id:2,firstName:"Sri Vamshi Mohan", lastName:"Darbha", wages:1000.00,interest:100.00,paid:300.00,refund:0.00,owed:0.00}
-
-				];
-			dataserviceobject.counter = 3;
-
-			dataserviceobject.fields = 
-				[
-					{fid:1,value:"firstName"},
-					{fid:2,value:"lastName"},
-					{fid:3,value:"wages"},
-					{fid:4,value:"interest"},
-					{fid:5,value:"paid"},
-					{fid:6,value:"refund"},
-					{fid:7,value:"owed"}
-
-				];
-			dataserviceobject.fcounter = 8;
-
-			
-			dataserviceobject.save = function(entry)
+			dataserviceobject.save = function(input)
 			{
-				entry.id = dataserviceobject.getNewId();
+				var entry = eval("["+input+"]");
+				
+				entry.index = dataserviceobject.getNewId();
 			
 				var tax = dataserviceobject.calculateTax(entry);
 				
 				dataserviceobject.setrefundvsowed(tax,entry);
 				
-				dataserviceobject.items.push(entry);
-
-
-				$http.post("/taxcalc/o/store",entry)
+				$http.post("/taxcalc/o/storeLiteral",entry)
 				.then(
 					function(data){
-						dataserviceobject.counter = data.data.id;
-						console.log(data.data.id);
+						//dataserviceobject.counter = data.data.id;
+						console.log(data.data);
 					},
 					function(data,status){
 						alert("Error occured "+status);
@@ -79,23 +56,22 @@ var app = angular.module("skeep",["ngRoute"]);
 				);
 
 			}		
-
-			dataserviceobject.addField = function(entry)
-			{
-				entry.fid = dataserviceobject.getNewFId();
-				console.log(entry.fid);
-				dataserviceobject.fields.push(entry);
-			}	
+			dataserviceobject.counter = 3;
 			
 			dataserviceobject.getNewId = function()
 			{
 				return dataserviceobject.counter++;
 			}
 
-			dataserviceobject.getNewFId = function()
+
+			dataserviceobject.calc = function(entry)
 			{
-				return dataserviceobject.fcounter++;
-			}
+				var tax = dataserviceobject.calculateTax(entry);
+				
+				dataserviceobject.setrefundvsowed(tax,entry);
+				
+			}		
+			
 			
 			dataserviceobject.calculateTax = function(entry)
 			{
@@ -103,17 +79,16 @@ var app = angular.module("skeep",["ngRoute"]);
 				console.log(formula);
 				var tax = eval(dataserviceobject.transform(formula,"entry"));
 					//.1*(entry.wages+entry.interest);
-				console.log(tax);
 				return tax;
 			}
-			
+
 			dataserviceobject.transform = function(formula,prefix)
 			{
 				formula = formula.replace("wages",prefix+".wages");
 				formula = formula.replace("interest",prefix+".interest");
 				return formula;
 			}
-
+			
 			dataserviceobject.setrefundvsowed = function(tax,entry)
 			{
 				if (tax < entry.paid)
@@ -147,7 +122,7 @@ var app = angular.module("skeep",["ngRoute"]);
 				});
 				$scope.calculate = function()
 				{
-					dataservice.save($scope.newItem);
+					dataservice.calc($scope.newItem);
 				}
 				console.log(angular.element(document.body).injector().get('dataservice'));
 			}
@@ -156,14 +131,12 @@ var app = angular.module("skeep",["ngRoute"]);
 
 	app.controller
 	("modifyForm",
-		["$scope","$location","dataservice",function($scope,$location,dataservice)
+		["$scope","$location","dataservice","$http",function($scope,$location,dataservice,$http)
 			{
-				$scope.fitems = dataservice.fields;
-				console.log(angular.element(document.body).injector().get('dataservice'));
-				$scope.newItem = {fid:-1,value:"New Item"};
+				$scope.newForm = '{index:-1,firstName:"Abc", lastName:"123", wages:1000.00,interest:100.00,paid:300.00,refund:0.00,owed:0.00,taxFormula:"0.1*(wages+interest)"}';
 				$scope.addField = function()
 				{
-					dataservice.addField($scope.newItem);
+					dataservice.save($scope.newForm);
 				}
 			}
 		]

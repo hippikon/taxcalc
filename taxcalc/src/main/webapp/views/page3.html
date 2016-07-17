@@ -1,10 +1,9 @@
 <div>
+	<span>Edit</span>
 	<div>
-		<ul style="color:#000000">
-			<li ng-repeat="item in fitems track by $index">
-				<input type="text" ng-model="item.value" required/>
-			</li>
-		</ul>
+		<textarea rows="5" cols="50" ng-model="newForm" required>
+		</textarea>
+		<br/>
 		<button type="button" ng-click="addField()">Add Field</button>
 	</div>
 </div>
